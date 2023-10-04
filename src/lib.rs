@@ -130,6 +130,14 @@ fn is_valid_url(test_url: &str) -> bool {
   Url::parse(test_url).is_ok()
 }
 
+#[async_recursion]
+pub async fn update_json_ld(url: &str, json_ld: Map<String, Value>) -> Result<(), Box<dyn std::error::Error>> {
+  let client = reqwest::Client::new();
+  let body = serde_json::to_string(&json_ld).unwrap();
+  let resp = client.put(url).body(body).send().await?;
+  debug!("Response: {}", resp.text().await?);
+  Ok(())
+}
 
 #[cfg(test)]
 mod tests {

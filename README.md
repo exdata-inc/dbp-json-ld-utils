@@ -23,3 +23,6 @@ If `load_context = true`, load `@context` JSON-LD (otherwise not.)
 ### `scan_json_ld_array(arr: &mut Vec<Value>, depth: u8, load_context: bool)`
 Load a JSON-LD Array `arr` and follow URLs in JSON-LD until specified `depth`.
 If `load_context = true`, load `@context` JSON-LD (otherwise not.) 
+
+### `update_json_ld(url: &str, json_ld: Map<String, Value>)`
+Update JSON-LD on `url` by `json_ld`.
