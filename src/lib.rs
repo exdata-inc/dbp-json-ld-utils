@@ -32,7 +32,7 @@ pub async fn load_json_ld(url: &str, depth: u8, load_context: bool) -> Result<Ma
 }
 
 #[async_recursion]
-async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_context: bool) {
+pub async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_context: bool) {
   if depth == 0 {
     return;
   }
@@ -88,7 +88,7 @@ async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_context:
 }
 
 #[async_recursion]
-async fn scan_json_ld_array(arr: &mut Vec<Value>, depth: u8, load_context: bool) {
+pub async fn scan_json_ld_array(arr: &mut Vec<Value>, depth: u8, load_context: bool) {
   if depth == 0 {
     return;
   }
