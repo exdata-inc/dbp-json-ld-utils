@@ -1,3 +1,5 @@
+#[macro_use]
+extern crate log;
 extern crate url;
 
 use url::Url;
@@ -7,7 +9,7 @@ use async_recursion::async_recursion;
 const AT_CONTEXT: &'static str = "@context";
 const AT_ID:      &'static str = "@id";
 const AT_REF:     &'static str = "@ref";
-// const AT_TYPE:    &'static str = "@type";
+const AT_TYPE:    &'static str = "@type";
 
 #[async_recursion]
 pub async fn load_json_ld(url: &str, depth: u8, load_context: bool) -> Result<Map<String, Value>, Box<dyn std::error::Error>> {
@@ -22,11 +24,11 @@ pub async fn load_json_ld(url: &str, depth: u8, load_context: bool) -> Result<Ma
         scan_json_ld_obj(&mut json_ld, depth, load_context).await;
         Ok(json_ld)
       } else {
-        Err(format!("Failed to parse JSON-LD from given url.\nurl: {url}\nresponse: {}", body.as_str()).into())
+        Err(format!("Failed to parse JSON-LD from given url.\nurl: {url}").into())
       }
     }
     Err(e) => {
-      Err(format!("Failed to parse JSON from given url (maybe NOT JSON).\nurl: {url}\nresponse: {}\nerror: {e}", body.as_str()).into())
+      Err(format!("Failed to parse JSON from given url (maybe NON-JSON file).\nurl: {url}\nerror: {e}").into())
     }
   }
 }
@@ -47,7 +49,7 @@ pub async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_cont
             obj.append(&mut new_obj);
           }
           Err(e) => {
-              println!("Error occurred: {}", e);
+            debug!("Error occurred: {}", e);
           }
         }
       }
@@ -69,7 +71,7 @@ pub async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_cont
       }
       if val.is_string() {
         let val_str = val.as_str().unwrap();
-        if is_valid_url(val_str) {
+        if is_valid_url(val_str) && key != AT_TYPE {
           let json_ld = load_json_ld(val_str, depth - 1, load_context).await;
           match json_ld {
             Ok(new_obj) => {
@@ -77,7 +79,7 @@ pub async fn scan_json_ld_obj(obj: &mut Map<String, Value>, depth: u8, load_cont
               obj.insert(key, Value::from(new_obj));
             }
             Err(e) => {
-                println!("Maybe NOT JSON-LD: {} {}", val_str, e);
+              debug!("Maybe NOT JSON-LD: {} {}", val_str, e);
             }
           }
         }
@@ -112,7 +114,7 @@ pub async fn scan_json_ld_array(arr: &mut Vec<Value>, depth: u8, load_context: b
             arr.push(Value::from(new_obj));
           }
           Err(e) => {
-              println!("Maybe NOT JSON-LD: {} {}", val_str, e);
+            debug!("Maybe NOT JSON-LD: {} {}", val_str, e);
           }
         }
       } else {
