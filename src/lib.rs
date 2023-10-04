@@ -6,10 +6,10 @@ use url::Url;
 use serde_json::{Value, Map};
 use async_recursion::async_recursion;
 
-const AT_CONTEXT: &'static str = "@context";
-const AT_ID:      &'static str = "@id";
-const AT_REF:     &'static str = "@ref";
-const AT_TYPE:    &'static str = "@type";
+pub const AT_CONTEXT: &'static str = "@context";
+pub const AT_ID:      &'static str = "@id";
+pub const AT_REF:     &'static str = "@ref";
+pub const AT_TYPE:    &'static str = "@type";
 
 #[async_recursion]
 pub async fn load_json_ld(url: &str, depth: u8, load_context: bool) -> Result<Map<String, Value>, Box<dyn std::error::Error>> {
