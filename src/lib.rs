@@ -79,6 +79,7 @@ pub const DBP_MOVE_TO:                    &'static str = "dbp:moveTo";
 pub const DBP_MOVED_DATASET:              &'static str = "dbp:movedDataset";
 pub const DBP_MOVE_CONFIG:                &'static str = "dbp:moveConfig";
 pub const DBP_REMOVE_CONFIG:              &'static str = "dbp:removeConfig";
+pub const DBP_DATASET_STORE:              &'static str = "dbp:datasetStore";
 
 // DBP Types
 pub const DBP_RW_DATASET:                   &'static str = "dbp:RealWorldDataset";
