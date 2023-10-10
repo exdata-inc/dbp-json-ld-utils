@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate log;
 extern crate env_logger as logger;
-use json_ld_utils::{load_json_ld, scan_json_ld_obj};
+use json_ld_utils::{load_json_ld, scan_json_ld_obj, AT_TYPE, SC_NAME, SC_DISTRIBUTION, DBP_CRON_CONFIG, DBP_MOVE_CONFIG, DBP_MOVE_FROM, DBP_MOVE_TO};
 use serde_json::Value;
 use std::env;
 
@@ -15,9 +15,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
   match loaded_json_ld {
     Ok(json_ld) => {
       info!("Full JSON-LD: {:?}", json_ld);
-      info!("@type: {}", json_ld.get("@type").unwrap());
-      info!("schema:name: {}", json_ld.get("schema:name").unwrap());
-      info!("schema:distribution: {:?}", json_ld.get("schema:distribution").unwrap());
+      info!("{}: {}", AT_TYPE, json_ld.get(AT_TYPE).unwrap());
+      info!("{}: {}", SC_NAME, json_ld.get(SC_NAME).unwrap());
+      info!("{}: {:?}", SC_DISTRIBUTION, json_ld.get(SC_DISTRIBUTION).unwrap());
     }
     Err(e) => {
       error!("Error occurred: {}", e);
@@ -32,11 +32,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut json_ld = json_ld_shared.to_owned();
         scan_json_ld_obj(&mut json_ld, 4, false).await;
         info!("Full JSON-LD: {:?}", json_ld);
-        info!("@type: {}", json_ld.get("@type").unwrap());
-        info!("schema:name: {}", json_ld.get("schema:name").unwrap());
-        info!("dbp:cronConfig: {}", json_ld.get("dbp:cronConfig").unwrap());
-        info!("dbp:moveConfig > dbp:moveFrom: {:?}", json_ld.get("dbp:moveConfig").unwrap().get("dbp:moveFrom").unwrap());
-        info!("dbp:moveConfig > dbp:moveTo: {:?}", json_ld.get("dbp:moveConfig").unwrap().get("dbp:moveTo").unwrap());
+        info!("{}: {}", AT_TYPE, json_ld[AT_TYPE].as_str().unwrap());
+        info!("{}: {}", SC_NAME, json_ld[SC_NAME].as_str().unwrap());
+        info!("{}: {}", DBP_CRON_CONFIG, json_ld[DBP_CRON_CONFIG].as_str().unwrap());
+        info!("{} > {}: {:?}", DBP_MOVE_CONFIG, DBP_MOVE_FROM, json_ld.get(DBP_MOVE_CONFIG).unwrap().get(DBP_MOVE_FROM).unwrap());
+        info!("{} > {}: {:?}", DBP_MOVE_CONFIG, DBP_MOVE_TO, json_ld.get(DBP_MOVE_CONFIG).unwrap().get(DBP_MOVE_TO).unwrap());
         } else {
         error!("Failed to process JSON-LD: {json_str}");
       }
