@@ -12,6 +12,7 @@ pub const AT_CONTEXT: &'static str = "@context";
 pub const AT_ID:      &'static str = "@id";
 pub const AT_REF:     &'static str = "@ref";
 pub const AT_TYPE:    &'static str = "@type";
+pub const AT_GRAPH:   &'static str = "@graph";
 
 // Frequently used schema.org Keys
 pub const SC_NAME:                    &'static str = "schema:name";
