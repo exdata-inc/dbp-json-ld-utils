@@ -31,6 +31,7 @@ pub const SC_START_TIME:              &'static str = "schema:startTime";
 pub const SC_END_TIME:                &'static str = "schema:endTime";
 pub const SC_STATUS:                  &'static str = "schema:status";
 pub const SC_CONTENT_REFERENCE_TIME:  &'static str = "schema:contentReferenceTime";
+pub const SC_DATASET:                 &'static str = "schema:dataset";
 
 // Frequently used schema.org Types
 pub const SC_ENTRY_POINT:  &'static str = "schema:EntryPoint";
