@@ -46,7 +46,6 @@ pub const DBP_COLLECTION_INFO:            &'static str = "dbp:collectionInfo";
 pub const DBP_KEY:                        &'static str = "dbp:key";
 pub const DBP_INPUT_TYPE:                 &'static str = "dbp:inputType";
 pub const DBP_INPUT_CHARACTERISTIC:       &'static str = "dbp:inputCharacteristic";
-pub const DBP_DATASET:                    &'static str = "dbp:dataset";
 pub const DBP_OUTPUT_TYPE:                &'static str = "dbp:outputType";
 pub const DBP_OUTPUT_CHARACTERISTIC:      &'static str = "dbp:outputCharacteristic";
 pub const DBP_ARGUMENT_TYPE:              &'static str = "dbp:argumentType";
